@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_linear"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/textview_padding"
+        android:layout_toLeftOf="@+id/date"
+        android:layout_centerVertical="true"
+        android:background="@android:color/darker_gray" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginRight="@dimen/textview_padding"
+        android:layout_toRightOf="@+id/date"
+        android:layout_centerVertical="true"
+        android:background="@android:color/darker_gray" />
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yesterday"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/textview_padding"
+        android:textSize="12sp" />
+</RelativeLayout>
