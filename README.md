@@ -28,7 +28,7 @@ Zero boilerplate code, just put your variables in the right direction
 <dependency>
     <groupId>com.github.salmaanahmed</groupId>
     <artifactId>FlagChatAdapter</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -45,7 +45,7 @@ allprojects {
 **Step 2.** Add the dependency
 ``` gradle
 dependencies {
-    implementation 'com.github.salmaanahmed:FlagChatAdapter:1.0'
+    implementation 'com.github.salmaanahmed:FlagChatAdapter:1.0.1'
 }
 ```
 # Manual Installation
