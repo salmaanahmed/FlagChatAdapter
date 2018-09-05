@@ -3,13 +3,14 @@ package sasliderdemo.salmaan.ahmsal.com.flagchatadapter
 import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.view.View
+import android.widget.Toast
 import java.util.*
 
 /**
  * Created by salmaanahmed on 04/09/2018.
  * Chat Adapter extended by FlagChatAdapter
  */
-class ChatAdapter(context: Context, private var list: ArrayList<Any>, clickListener: ((View, Int) -> Unit)? = null) : FlagChatAdapter(context, clickListener) {
+class ChatAdapter(context: Context, private var list: ArrayList<Any>) : FlagChatAdapter(context) {
 
     /**
      * Name of the person user is chatting with
@@ -87,6 +88,13 @@ class ChatAdapter(context: Context, private var list: ArrayList<Any>, clickListe
      */
     override fun colorMe(context: Context): Int {
         return ContextCompat.getColor(context, R.color.cyan)
+    }
+
+    /**
+     * Handle long click event
+     */
+    override fun onMessageLongClicked(position: Int) {
+        Toast.makeText(context, "Long clicked on position $position", Toast.LENGTH_LONG).show()
     }
 
     /**

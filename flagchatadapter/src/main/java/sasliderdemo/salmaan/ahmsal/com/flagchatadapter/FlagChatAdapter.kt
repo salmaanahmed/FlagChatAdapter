@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.cell_chat_date.view.*
  * Extend your recycler view adapter with this adapter and voila!
  * You have your animated chat adapter working.
  */
-abstract class FlagChatAdapter(val context: Context, val clickListener: ((View, Int) -> Unit)? = null) : RecyclerView.Adapter<FlagChatAdapter.ViewHolder>() {
+abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<FlagChatAdapter.ViewHolder>() {
 
     private val chatView = 0 //View types - Chat View
     private val dateView = 1 //View types - Date View
@@ -50,6 +50,11 @@ abstract class FlagChatAdapter(val context: Context, val clickListener: ((View, 
      * otherwise flags will animate on every scroll
      */
     abstract fun setAnimationStatus(position: Int, animationStatus: Boolean)
+
+    /**
+     * You can implement whatever you want onLongClick event
+     */
+    abstract fun onMessageLongClicked(position: Int)
 
     /**
      * Name of the sender
@@ -143,6 +148,10 @@ abstract class FlagChatAdapter(val context: Context, val clickListener: ((View, 
                     holder.itemView.name.visibility = View.VISIBLE
                     holder.itemView.flagPadding.visibility = View.VISIBLE
                 }
+            }
+            holder.itemView.rootView.setOnLongClickListener {
+                onMessageLongClicked(position)
+                return@setOnLongClickListener true
             }
         } else {
             // If it is date, populate the textview
