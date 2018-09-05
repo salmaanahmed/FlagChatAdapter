@@ -4,13 +4,14 @@
 FlagChatAdapter is easy to implement enchanting recycler view adapter.
 Just extend your adapter with FlagChatAdapter, impliment some methods and voila!
 You have got the most beautiful looking chat on your phone.
+Zero boilerplate code, just put your variables in the right direction.
 
 <br>
 <img height="400" src="https://github.com/salmaanahmed/FlagChatAdapter/blob/master/chat_screen.png?raw=true" />
 <br>
 
 # Demonstration
-Multiple ways to input values into the slider.
+See the flag animation.
 
 <br>
 <img height="400" src="https://github.com/salmaanahmed/FlagChatAdapter/blob/master/chat_animation.gif?raw=true" />
@@ -51,51 +52,52 @@ allprojects {
 **Step 2.** Add the dependency
 ``` gradle
 dependencies {
-  compile 'com.github.salmaanahmed:SASlider:0.1'
+    implementation 'com.github.salmaanahmed:FlagChatAdapter:1.0'
 }
 ```
 # Manual Installation
 If you prefer not to use either of the above mentioned dependency managers, you can integrate FlagChatAdapter into your project manually by adding the files contained in the java folder to your project.
 
 # Getting Started
-# Using XML
-You can use FlagChatAdapter in XML as following
-``` xml
-<sasliderdemo.salmaan.ahmsal.com.saslider.SASlider
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_marginBottom="50dp"
-    app:layout_constraintTop_toTopOf="parent"
-    app:circleColor="@android:color/darker_gray"
-    app:defaultValue="150"
-    app:editTextBorderColor="@color/colorGrey"
-    app:isDecimal="false"
-    app:maxValue="300"
-    app:minValue="0"
-    app:criticalColor="@color/darkRed"
-    app:upperThreshold="200"
-    app:lowerThreshold="100"
-    app:sliderColor="@color/darkGreen" />
+# Extend Your Adapter With FlagChatAdapter
+Extend your adapter with FlagChatAdapter and pass context to the adapter
+```kotlin
+class ChatAdapter(context: Context, private var list: ArrayList<Any>) : FlagChatAdapter(context)
 ```
-High customizeability allows developers to have desired color of circles, slider thumb, edit text border and color of thumb when slider value is critical i.e. beyond the defined thresholds.
-Developers can set the slider type to decimal or integer. Set min max range and also the critical thresholds of both upper and lower bounds.
 
-# Using Kotlin
-You can create the slider programatically as well, see the example below.
+# Implement methods
+Implement required methods and variables. Write one line functions, isnt it so simple ;)
+You may see the sample for detail description
 ``` kotlin
-  val slider = SASlider(this@MainActivity)
-  slider.sliderColor = Color.BLUE
-  slider.min = 0.0
-  slider.max = 50.0
-  slider.criticalColor = Color.BLACK
-  slider.isDecimal = true
-  linearLayout.addView(slider)
+    //return chat message on the position passed as parameter
+    abstract fun chatMessage(position: Int): String
+
+    //return time of message as string format on the position passed as parameter
+    abstract fun messageTime(position: Int): String
+
+    //return message sender on the position passed as parameter, if its you, return true
+    abstract fun isMe(position: Int): Boolean
+
+    //you must have a variable of animation in the object i.e. if you want to animate or not
+    abstract fun animation(position: Int): Boolean
+
+    //the animation variable must be set to false when animation is performed once, otherwise flags will animate on every scroll
+    abstract fun setAnimationStatus(position: Int, animationStatus: Boolean)
+    
+    //Name of the sender
+    abstract val otherName: String
+
+    //You shall simply return list.size
+    abstract val listSize: Int
 ```
-# Getting value
-Developers can query the current value anytime in the slider using the following variable.
-``` kotlin
-slider.selectedIndex
+
+You have also got longClickEvents
+```kotlin
+    //You can implement whatever you want onLongClick event
+    abstract fun onMessageLongClicked(position: Int)
 ```
+Beautify your chat with provided customization. You can also change color of flags.
+Very simple to implement and looks awesome. You can find more details in sample app.
 
 # Contributions and Licence
 ```FlagChatAdapter``` is available under the MIT license. See the [LICENSE](https://github.com/salmaanahmed/SAExpandableButton/blob/master/LICENCE.txt) file for more info.
