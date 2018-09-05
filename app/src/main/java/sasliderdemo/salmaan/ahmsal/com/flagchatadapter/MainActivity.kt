@@ -9,17 +9,26 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
+/**
+ * Main Activity for chat screen
+ */
 class MainActivity : AppCompatActivity() {
 
-    var isMeRandom = false
+    private var isMeRandom = false // IsMe flag random
 
-    private var chatMessages: ArrayList<Any> = ArrayList()
-    private var chatAdapter: ChatAdapter? = null
+    private var chatMessages: ArrayList<Any> = ArrayList()  // Chat Array
+    private var chatAdapter: ChatAdapter? = null            // Chat Adapter
 
+    /**
+     * Bind adapter with recycler view
+     * Add view listeners
+     * Load dummy data
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Create and assign adapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         chatAdapter = ChatAdapter(this@MainActivity, chatMessages)
         recyclerView.adapter = chatAdapter
@@ -28,22 +37,31 @@ class MainActivity : AppCompatActivity() {
             btnSend.visibility = if (tvMessage.text.trim().isNotEmpty()) View.VISIBLE else View.INVISIBLE
         }
 
+        // Change Sender
+        // Send Message
+        // Clear edit text
         btnSend.setOnClickListener {
             isMeRandom = !isMeRandom
             sendMessage(ChatModel(tvMessage.text.trim().toString(), Calendar.getInstance().toHHmma(), isMeRandom, true))
             tvMessage.text = null
         }
 
+        // Load dummy data
         loadDummyData()
     }
 
+    /**
+     * Add chat message, notify data set and scroll to bottom
+     */
     private fun sendMessage(chatMessage: Any) {
         chatMessages.add(chatMessage)
-        chatAdapter!!.notifyDataSetChanged()
         chatAdapter!!.notifyItemInserted(chatMessages.size - 1)
         Handler().postDelayed({ recyclerView.scrollToPosition(chatMessages.size - 1) }, 100)
     }
 
+    /**
+     * Load dummy data initially
+     */
     private fun loadDummyData() {
         val yesterday: Calendar = Calendar.getInstance()
         yesterday.add(Calendar.DATE, -1)
@@ -54,25 +72,4 @@ class MainActivity : AppCompatActivity() {
         sendMessage(ChatModel("Yep, I am on my way :)", "07:40 pm", true, false))
         sendMessage(Calendar.getInstance())
     }
-
-//    private fun addChatObjectToList(chat: ChatModel) {
-//        if (chatMessages.isEmpty()) {
-//            chatMessages.add(chat.time)
-//        } else if (chatMessages.last() is ChatModel) {
-//            if (!(chatMessages.last() as ChatModel).time.toCalender()!!.isSameDay(chat.time.toCalender()!!)) {
-//                chatMessages.add(chat.time)
-//            } else {
-//                // Check date
-//                if (chat.isMe == (chatMessages.last() as ChatModel).isMe && chat.time.toCalender()!!.isSameMinute(((chatMessages.last() as ChatModel).time).toCalender()!!)) {
-//                    (chatMessages.last() as ChatModel).showTime = false
-//                    chatAdapter!!.notifyItemChanged(chatMessages.size - 1)
-//                }
-//            }
-//        }
-//
-//        chatMessages.add(chat)
-//        chatAdapter!!.notifyDataSetChanged()
-//        chatAdapter!!.notifyItemInserted(chatMessages.size - 1)
-//        Handler().postDelayed({ recyclerView.scrollToPosition(chatMessages.size - 1) }, 100)
-//    }
 }
