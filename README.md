@@ -4,14 +4,7 @@
 FlagChatAdapter is easy to implement enchanting recycler view adapter.
 Just extend your adapter with FlagChatAdapter, impliment some methods and voila!
 You have got the most beautiful looking chat on your phone.
-Zero boilerplate code, just put your variables in the right direction.
-
-<br>
-<img height="400" src="https://github.com/salmaanahmed/FlagChatAdapter/blob/master/chat_screen.png?raw=true" />
-<br>
-
-# Demonstration
-See the flag animation.
+Zero boilerplate code, just put your variables in the right direction
 
 <br>
 <img height="400" src="https://github.com/salmaanahmed/FlagChatAdapter/blob/master/chat_animation.gif?raw=true" />
@@ -104,4 +97,4 @@ Very simple to implement and looks awesome. You can find more details in sample 
 
 Pull requests are welcome! The best contributions will consist of substitutions or configurations for classes/methods known to block the main thread during a typical app lifecycle.
 
-I would love to know if you are using SASlider in your app, send an email to [Salmaan Ahmed](mailto:salmaan.ahmed@hotmail.com)
+I would love to know if you are using FlagChatAdapter in your app, send an email to [Salmaan Ahmed](mailto:salmaan.ahmed@hotmail.com)
