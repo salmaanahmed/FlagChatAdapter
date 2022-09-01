@@ -1,9 +1,8 @@
 package sasliderdemo.salmaan.ahmsal.com.flagchatadapter
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import java.util.*
 
 /**

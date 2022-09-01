@@ -1,8 +1,6 @@
 package sasliderdemo.salmaan.ahmsal.com.flagchatadapter
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +9,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import kotlinx.android.synthetic.main.cell_chat.view.*
-import kotlinx.android.synthetic.main.cell_chat_date.view.*
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Created by salmaanahmed on 04/09/2018.

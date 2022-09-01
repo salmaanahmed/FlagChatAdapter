@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Github_Projects/Android/FlagChatAdapter/flagchatadapter/src/main/res/layout/cell_chat_date.xml" value="0.5" />
+        <entry key="..\:/Github_Projects/Android/FlagChatAdapter/flagchatadapter/src/main/res/layout/cell_chat.xml" value="0.2046875" />
+        <entry key="..\:/Github_Projects/Android/FlagChatAdapter/flagchatadapter/src/main/res/layout/cell_chat_date.xml" value="0.25" />
       </map>
     </option>
   </component>
