@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
@@ -135,16 +137,22 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
 
             // If previous message is from same person, hide the flag
             if (position > 0 && isChatModel(position - 1) && isMe == isMe(position - 1)) { //Hide Flag
-                holder.itemView.name.visibility = View.GONE
-                holder.itemView.flagPadding.visibility = View.GONE
+                holder.apply {
+                    name.visibility = View.GONE
+                    flagPadding.visibility = View.GONE
+                }
             } else { // Otherwise show flag
                 if (animate) {// If flag is not animated before
-                    holder.itemView.name.visibility = View.INVISIBLE
-                    holder.itemView.flagPadding.visibility = View.VISIBLE
-                    flagAnimation(holder.itemView, position)
+                    holder.apply {
+                        name.visibility = View.INVISIBLE
+                        flagPadding.visibility = View.VISIBLE
+                        flagAnimation(holder.itemView, position)
+                    }
                 } else { // Do not animate flag if its animated before i.e. if user is scrolling list
-                    holder.itemView.name.visibility = View.VISIBLE
-                    holder.itemView.flagPadding.visibility = View.VISIBLE
+                    holder.apply {
+                        name.visibility = View.VISIBLE
+                        flagPadding.visibility = View.VISIBLE
+                    }
                 }
             }
             holder.itemView.rootView.setOnLongClickListener {
@@ -153,7 +161,7 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
             }
         } else {
             // If it is date, populate the textview
-            holder.itemView.date.text = date(position)
+            holder.date.text = date(position)
         }
     }
 
@@ -188,8 +196,17 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
      * ViewHolder to cache the cells to optimize performance
      * Populate the data, set colors, flags, animation etc.
      */
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindData(message: String, showTime: Boolean = true, time: String, isMe: Boolean, colorMe: Int, colorOther: Int, otherName: String) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        val line: FrameLayout by lazy { itemView.findViewById(R.id.line) }
+        val name: TextView by lazy { itemView.findViewById(R.id.name) }
+        val message: TextView by lazy { itemView.findViewById(R.id.message) }
+        val time: TextView by lazy { itemView.findViewById(R.id.time) }
+        val linearLayout: LinearLayout by lazy { itemView.findViewById(R.id.linearLayout) }
+        val date: TextView by lazy { itemView.findViewById(R.id.date) }
+        val flagPadding: View by lazy { itemView.findViewById(R.id.flagPadding) }
+
+            fun bindData(message: String, showTime: Boolean = true, time: String, isMe: Boolean, colorMe: Int, colorOther: Int, otherName: String) {
             setSides(isMe, colorMe, colorOther)
             setMessage(message, showTime, time, isMe, otherName)
         }
@@ -197,37 +214,68 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
         // Set sides, colors, and views according to sender
         private fun setSides(isMe: Boolean, colorMe: Int, colorOther: Int) {
             if (isMe) {
-                (itemView.line.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-                (itemView.name.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-                (itemView.message.layoutParams as LinearLayout.LayoutParams).gravity = Gravity.RIGHT
-                (itemView.message.layoutParams as LinearLayout.LayoutParams).leftMargin = itemView.context.resources.getDimensionPixelSize(R.dimen.message_padding)
-                (itemView.message.layoutParams as LinearLayout.LayoutParams).rightMargin = 0
-                itemView.line.setBackgroundColor(colorMe)
-                itemView.name.setBackgroundColor(colorMe)
-                itemView.linearLayout.gravity = Gravity.RIGHT
-                itemView.name.gravity = Gravity.RIGHT
-                itemView.time.gravity = Gravity.RIGHT
+
+                line.apply {
+                    (layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+                    setBackgroundColor(colorMe)
+                }
+
+                name.apply {
+                    (layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+                    setBackgroundColor(colorMe)
+                    gravity = Gravity.RIGHT
+                }
+
+                message.apply {
+                    (layoutParams as LinearLayout.LayoutParams).apply {
+                        gravity = Gravity.RIGHT
+                        leftMargin = itemView.context.resources.getDimensionPixelSize(R.dimen.message_padding)
+                        rightMargin = 0
+                    }
+                }
+
+                Gravity.RIGHT.let {
+                    linearLayout.gravity = it
+                    time.gravity = it
+                }
+
             } else {
-                (itemView.line.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0)
-                (itemView.name.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0)
-                (itemView.message.layoutParams as LinearLayout.LayoutParams).gravity = Gravity.LEFT
-                (itemView.message.layoutParams as LinearLayout.LayoutParams).rightMargin = itemView.context.resources.getDimensionPixelSize(R.dimen.message_padding)
-                (itemView.message.layoutParams as LinearLayout.LayoutParams).leftMargin = 0
-                itemView.line.setBackgroundColor(colorOther)
-                itemView.name.setBackgroundColor(colorOther)
-                itemView.linearLayout.gravity = Gravity.LEFT
-                itemView.name.gravity = Gravity.LEFT
-                itemView.time.gravity = Gravity.LEFT
+                line.apply {
+                    (layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0)
+                    setBackgroundColor(colorOther)
+                }
+
+                name.apply {
+                    (layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0)
+                    setBackgroundColor(colorOther)
+                    gravity = Gravity.LEFT
+                }
+
+                message.apply {
+                    (layoutParams as LinearLayout.LayoutParams).apply {
+                        gravity = Gravity.LEFT
+                        rightMargin = itemView.context.resources.getDimensionPixelSize(R.dimen.message_padding)
+                        leftMargin = 0
+                    }
+                }
+
+                Gravity.LEFT.let {
+                    linearLayout.gravity = it
+                    time.gravity = it
+                }
+
             }
         }
 
         // Populate message, date, sender in the views
         private fun setMessage(message: String, showTime: Boolean, time: String, isMe: Boolean, otherName: String) {
-            itemView.message.text = message
-            itemView.time.text = time
-            itemView.name.text = if (isMe) "Me" else otherName
-            if (showTime) itemView.time.visibility = View.VISIBLE
-            else itemView.time.visibility = View.GONE
+            this@ViewHolder.let {
+                it.message.text = message
+                it.time.text = time
+                it.name.text = if (isMe) "Me" else otherName
+                if (showTime) it.time.visibility = View.VISIBLE
+                else it.time.visibility = View.GONE
+            }
         }
     }
 

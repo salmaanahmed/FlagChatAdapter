@@ -3,9 +3,11 @@ package sasliderdemo.salmaan.ahmsal.com.flagchatadapter
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.widget.LinearLayout
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 /**
@@ -18,6 +20,11 @@ class MainActivity : AppCompatActivity() {
     private var chatMessages: ArrayList<Any> = ArrayList()  // Chat Array
     private var chatAdapter: ChatAdapter? = null            // Chat Adapter
 
+    private val recyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerView) }
+    private val tvMessage by lazy { findViewById<EditText>(R.id.tvMessage) }
+    private val btnSend by lazy { findViewById<ImageView>(R.id.btnSend) }
+
+
     /**
      * Bind adapter with recycler view
      * Add view listeners
@@ -28,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Create and assign adapter
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         chatAdapter = ChatAdapter(this@MainActivity, chatMessages)
         recyclerView.adapter = chatAdapter
 
