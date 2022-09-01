@@ -4,20 +4,23 @@
     android:id="@+id/root_linear"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:animateLayoutChanges="true" >
+    android:animateLayoutChanges="true"
+    >
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <View
             android:id="@+id/flagPadding"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
-            android:layout_height="35dp" />
+            android:layout_height="35dp"
+            />
 
         <TextView
             android:id="@+id/message"
@@ -26,16 +29,17 @@
             android:textSize="12sp"
             android:paddingTop="5dp"
             android:paddingHorizontal="10dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            android:text="@string/test_chat_text"
             android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="10:00am"
+            android:text="@string/test_time"
             android:paddingHorizontal="10dp"
-            android:textSize="8sp" />
+            android:textSize="11sp" />
+
     </LinearLayout>
 
     <FrameLayout
@@ -45,7 +49,8 @@
         android:layout_marginHorizontal="8dp"
         android:layout_alignTop="@+id/linearLayout"
         android:layout_alignBottom="@+id/linearLayout"
-        android:background="@color/orange" />
+        android:background="@color/orange"
+        />
 
     <TextView
         android:id="@+id/name"
@@ -57,7 +62,7 @@
         android:paddingVertical="10dp"
         android:paddingHorizontal="20dp"
         android:textSize="14sp"
-        android:text="Name"
+        android:text="@string/name"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>
