@@ -2,6 +2,7 @@ package sasliderdemo.salmaan.ahmsal.com.flagchatadapter
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     private fun sendMessage(chatMessage: Any) {
         chatMessages.add(chatMessage)
         chatAdapter!!.notifyItemInserted(chatMessages.size - 1)
-        Handler().postDelayed({ recyclerView.scrollToPosition(chatMessages.size - 1) }, 100)
+        Handler(Looper.getMainLooper()).postDelayed({ recyclerView.scrollToPosition(chatMessages.size - 1) }, 100)
     }
 
     /**
@@ -72,10 +73,10 @@ class MainActivity : AppCompatActivity() {
         val yesterday: Calendar = Calendar.getInstance()
         yesterday.add(Calendar.DATE, -1)
         sendMessage(yesterday)
-        sendMessage(ChatModel("Hello", "07:34 pm", false, false))
-        sendMessage(ChatModel("Hi", "07:35 pm", true, false))
-        sendMessage(ChatModel("Are you coming for dinner?", "07:35 pm", false, false))
-        sendMessage(ChatModel("Yep, I am on my way :)", "07:40 pm", true, false))
+        sendMessage(ChatModel("Hello", "07:34 pm", isMe = false, false))
+        sendMessage(ChatModel("Hi", "07:35 pm", isMe = true, false))
+        sendMessage(ChatModel("Are you coming for dinner?", "07:35 pm", isMe = false, false))
+        sendMessage(ChatModel("Yep, I am on my way :)", "07:40 pm", isMe = true, false))
         sendMessage(Calendar.getInstance())
     }
 }

@@ -25,12 +25,12 @@ fun Calendar.isYesterday(): Boolean {
 }
 
 fun Calendar.toDateLong(): String {
-    val dateFormat = SimpleDateFormat("dd MMMM, yyyy")
+    val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.US)
     return dateFormat.format(this.time)
 }
 
 fun Calendar.toHHmma(): String {
-    val dateFormat = SimpleDateFormat("hh:mm a")
+    val dateFormat = SimpleDateFormat("hh:mm a", Locale.US)
     return dateFormat.format(this.time)
 }
 
