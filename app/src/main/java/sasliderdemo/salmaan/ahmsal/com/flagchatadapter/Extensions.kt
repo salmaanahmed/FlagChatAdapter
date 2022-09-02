@@ -6,14 +6,9 @@ import android.widget.EditText
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * Created by salmaanahmed on 04/09/2018.
- */
+//Created by salmaanahmed on 04/09/2018.
 
-
-/**
- * Calendar Extensions
- */
+//Calendar Extensions
 fun Calendar.isToday(): Boolean {
     val calendar = Calendar.getInstance()
     return this.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH) && this.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) && this.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
@@ -35,9 +30,7 @@ fun Calendar.toHHmma(): String {
 }
 
 
-/**
- * Edit Text Extensions
- */
+//Edit Text Extensions
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

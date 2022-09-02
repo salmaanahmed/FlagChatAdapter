@@ -1,3 +1,4 @@
+//Created on 04/09/2018
 package sasliderdemo.salmaan.ahmsal.com.flagchatadapter
 
 import android.content.Context
@@ -15,9 +16,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- * Created by salmaanahmed on 04/09/2018.
  * Extend your recycler view adapter with this adapter and voila!
  * You have your animated chat adapter working.
+ * @author  Salmaan Ahmed
+ * @since  1.0.1
  */
 abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<FlagChatAdapter.ViewHolder>() {
 
@@ -25,17 +27,17 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
     private val dateView = 1 //View types - Date View
 
     /**
-     * return chat message on the position passed as parameter
+     * @return chat message on the position passed as parameter
      */
     abstract fun chatMessage(position: Int): String
 
     /**
-     * return time of message as string format on the position passed as parameter
+     * @return time of message as string format on the position passed as parameter
      */
     abstract fun messageTime(position: Int): String
 
     /**
-     * return message sender on the position passed as parameter
+     * @return message sender on the position passed as parameter
      * if its you, return true
      */
     abstract fun isMe(position: Int): Boolean
@@ -51,39 +53,26 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
      */
     abstract fun setAnimationStatus(position: Int, animationStatus: Boolean)
 
-    /**
-     * You can implement whatever you want onLongClick event
-     */
+    /** You can implement whatever you want onLongClick event. */
     abstract fun onMessageLongClicked(position: Int)
 
-    /**
-     * Name of the sender
-     */
+    /** Name of the sender. */
     abstract val otherName: String
 
-    /**
-     * You shall simply return list.size
-     */
+    /** You shall simply return list.size. */
     abstract val listSize: Int
 
-    /**
-     * OPTIONAL:
-     * you can change flag color of your chat message
-     */
+    /** **OPTIONAL:** you can change flag color of your chat message. */
     open fun colorMe(context: Context): Int {
         return ContextCompat.getColor(context, R.color.orange)
     }
 
-    /**
-     * OPTIONAL:
-     * you can change flag color of other person's chat message
-     */
+    /** **OPTIONAL:** you can change flag color of other person's chat message. */
     open fun colorOther(context: Context): Int {
         return ContextCompat.getColor(context, R.color.green)
     }
 
-    /**
-     * OPTIONAL:
+    /** **OPTIONAL:**
      * If your list contains some other data type from chat model i.e. date
      * you must return false in that case so adapter can check for date and display the date
      * chat message functions will not be called on the position if !isChatModel
@@ -92,8 +81,7 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
         return true
     }
 
-    /**
-     * OPTIONAL:
+    /** **OPTIONAL:**
      * If !isChatModel adapter will display date place holder
      * it will be populated with the string returned by this function
      * you shall return the date or strings such as TODAY or YESTERDAY in this function
@@ -102,8 +90,7 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
         return ""
     }
 
-    /**
-     * OPTIONAL:
+    /** **OPTIONAL:**
      * This current code will not display time if same user sends message in same time
      * You may override this method to change the logic or simply return true if you always want to show time
      */
@@ -119,9 +106,9 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
     }
 
     /**
-     * Overriden function to bind view holder
-     * Decide to show the chat view or date view
-     * Populate data in views and show animation
+     *  - Overriden function to bind view holder.
+     *  - Decide to show the chat view or date view.
+     *  - Populate data in views and show animation.
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (isChatModel(position)) { // If it is chat model
@@ -165,16 +152,12 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
         }
     }
 
-    /**
-     * Item view type on basis of chat model
-     */
+    /** Item view type on basis of chat model. */
     override fun getItemViewType(position: Int): Int {
         return if (isChatModel(position)) chatView else dateView
     }
 
-    /**
-     * Create view holder for both type of objects
-     */
+    /** Create view holder for both type of objects. */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return if (viewType == chatView) {
             val v = LayoutInflater.from(parent.context).inflate(R.layout.cell_chat, parent, false)
@@ -185,16 +168,14 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
         }
     }
 
-    /**
-     * Number of messages
-     */
+    /** Number of messages. */
     override fun getItemCount(): Int {
         return listSize
     }
 
     /**
-     * ViewHolder to cache the cells to optimize performance
-     * Populate the data, set colors, flags, animation etc.
+     *  - ViewHolder to cache the cells to optimize performance
+     *  - Populate the data, set colors, flags, animation etc.
      */
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -279,9 +260,7 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
         }
     }
 
-    /**
-     * Flag animation on the views
-     */
+    /** Flag animation on the views. */
     private fun flagAnimation(itemView: ViewHolder, position: Int) {
         val translateAnim = AnimationUtils.loadAnimation(context, R.anim.item_animation_from_bottom)
         translateAnim.apply {

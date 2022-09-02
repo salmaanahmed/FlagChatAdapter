@@ -13,6 +13,8 @@ import java.util.*
 
 /**
  * Main Activity for chat screen
+ * @author  Salmaan Ahmed
+ * @since  1.0.1
  */
 class MainActivity : AppCompatActivity() {
 
@@ -27,9 +29,9 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
-     * Bind adapter with recycler view
-     * Add view listeners
-     * Load dummy data
+     *  - Bind adapter with recycler view
+     *  - Add view listeners
+     *  - Load dummy data
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,18 +59,14 @@ class MainActivity : AppCompatActivity() {
         loadDummyData()
     }
 
-    /**
-     * Add chat message, notify data set and scroll to bottom
-     */
+    /** Add chat message, notify data set and scroll to bottom. */
     private fun sendMessage(chatMessage: Any) {
         chatMessages.add(chatMessage)
         chatAdapter!!.notifyItemInserted(chatMessages.size - 1)
         Handler(Looper.getMainLooper()).postDelayed({ recyclerView.scrollToPosition(chatMessages.size - 1) }, 100)
     }
 
-    /**
-     * Load dummy data initially
-     */
+    /** Load dummy data initially. */
     private fun loadDummyData() {
         val yesterday: Calendar = Calendar.getInstance()
         yesterday.add(Calendar.DATE, -1)
