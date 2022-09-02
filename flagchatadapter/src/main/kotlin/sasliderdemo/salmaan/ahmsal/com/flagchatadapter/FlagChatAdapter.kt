@@ -146,7 +146,7 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
                     holder.apply {
                         name.visibility = View.INVISIBLE
                         flagPadding.visibility = View.VISIBLE
-                        flagAnimation(holder.itemView, position)
+                        flagAnimation(this, position)
                     }
                 } else { // Do not animate flag if its animated before i.e. if user is scrolling list
                     holder.apply {
@@ -282,24 +282,28 @@ abstract class FlagChatAdapter(val context: Context) : RecyclerView.Adapter<Flag
     /**
      * Flag animation on the views
      */
-    private fun flagAnimation(itemView: View, position: Int) {
-        val translateAnim = AnimationUtils.loadAnimation(itemView.context, R.anim.item_animation_from_bottom)
-        translateAnim.fillAfter = true
-        translateAnim.isFillEnabled = true
-        translateAnim.fillBefore = false
-        translateAnim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {
-                itemView.linearLayout.alpha = 0f
-                itemView.name.visibility = View.VISIBLE
-            }
+    private fun flagAnimation(itemView: ViewHolder, position: Int) {
+        val translateAnim = AnimationUtils.loadAnimation(context, R.anim.item_animation_from_bottom)
+        translateAnim.apply {
+            fillAfter = true
+            isFillEnabled = true
+            fillBefore = false
+            setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation) {
+                    itemView.apply {
+                        linearLayout.alpha = 0f
+                        name.visibility = View.VISIBLE
+                    }
+                }
 
-            override fun onAnimationEnd(animation: Animation) {
-                itemView.linearLayout.animate().alpha(1.0f).duration = 1000
-                setAnimationStatus(position, false)
-            }
+                override fun onAnimationEnd(animation: Animation) {
+                    itemView.linearLayout.animate().alpha(1.0f).duration = 1000
+                    setAnimationStatus(position, false)
+                }
 
-            override fun onAnimationRepeat(animation: Animation) {}
-        })
+                override fun onAnimationRepeat(animation: Animation) {}
+            })
+        }
         itemView.name.startAnimation(translateAnim)
     }
 
