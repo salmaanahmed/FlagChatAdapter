@@ -1,8 +1,10 @@
+//Created on 04/09/2018
 package sasliderdemo.salmaan.ahmsal.com.flagchatadapter
 
 /**
- * Created by salmaanahmed on 04/09/2018.
- * Data class for chat model
+ * Data class for chat model.
+ * @author  Salmaan Ahmed
+ * @since  1.0.1
  */
 data class ChatModel (
     var message: String = "",

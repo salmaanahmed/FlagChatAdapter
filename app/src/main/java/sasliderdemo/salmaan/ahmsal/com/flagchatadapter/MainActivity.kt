@@ -1,16 +1,20 @@
 package sasliderdemo.salmaan.ahmsal.com.flagchatadapter
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.widget.LinearLayoutManager
+import android.os.Looper
 import android.view.View
-import android.widget.LinearLayout
-import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.EditText
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 /**
  * Main Activity for chat screen
+ * @author  Salmaan Ahmed
+ * @since  1.0.1
  */
 class MainActivity : AppCompatActivity() {
 
@@ -19,17 +23,22 @@ class MainActivity : AppCompatActivity() {
     private var chatMessages: ArrayList<Any> = ArrayList()  // Chat Array
     private var chatAdapter: ChatAdapter? = null            // Chat Adapter
 
+    private val recyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerView) }
+    private val tvMessage by lazy { findViewById<EditText>(R.id.tvMessage) }
+    private val btnSend by lazy { findViewById<ImageView>(R.id.btnSend) }
+
+
     /**
-     * Bind adapter with recycler view
-     * Add view listeners
-     * Load dummy data
+     *  - Bind adapter with recycler view
+     *  - Add view listeners
+     *  - Load dummy data
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // Create and assign adapter
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         chatAdapter = ChatAdapter(this@MainActivity, chatMessages)
         recyclerView.adapter = chatAdapter
 
@@ -50,26 +59,22 @@ class MainActivity : AppCompatActivity() {
         loadDummyData()
     }
 
-    /**
-     * Add chat message, notify data set and scroll to bottom
-     */
+    /** Add chat message, notify data set and scroll to bottom. */
     private fun sendMessage(chatMessage: Any) {
         chatMessages.add(chatMessage)
         chatAdapter!!.notifyItemInserted(chatMessages.size - 1)
-        Handler().postDelayed({ recyclerView.scrollToPosition(chatMessages.size - 1) }, 100)
+        Handler(Looper.getMainLooper()).postDelayed({ recyclerView.scrollToPosition(chatMessages.size - 1) }, 100)
     }
 
-    /**
-     * Load dummy data initially
-     */
+    /** Load dummy data initially. */
     private fun loadDummyData() {
         val yesterday: Calendar = Calendar.getInstance()
         yesterday.add(Calendar.DATE, -1)
         sendMessage(yesterday)
-        sendMessage(ChatModel("Hello", "07:34 pm", false, false))
-        sendMessage(ChatModel("Hi", "07:35 pm", true, false))
-        sendMessage(ChatModel("Are you coming for dinner?", "07:35 pm", false, false))
-        sendMessage(ChatModel("Yep, I am on my way :)", "07:40 pm", true, false))
+        sendMessage(ChatModel("Hello", "07:34 pm", isMe = false, false))
+        sendMessage(ChatModel("Hi", "07:35 pm", isMe = true, false))
+        sendMessage(ChatModel("Are you coming for dinner?", "07:35 pm", isMe = false, false))
+        sendMessage(ChatModel("Yep, I am on my way :)", "07:40 pm", isMe = true, false))
         sendMessage(Calendar.getInstance())
     }
 }

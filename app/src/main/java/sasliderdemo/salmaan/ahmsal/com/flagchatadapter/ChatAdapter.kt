@@ -1,72 +1,57 @@
+//Created on 04/09/2018
 package sasliderdemo.salmaan.ahmsal.com.flagchatadapter
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import java.util.*
 
 /**
- * Created by salmaanahmed on 04/09/2018.
- * Chat Adapter extended by FlagChatAdapter
+ * Chat Adapter extended by FlagChatAdapter.
+ *
+ * @author  Salmaan Ahmed
+ * @since  1.0.1
+ *
  */
 class ChatAdapter(context: Context, private var list: ArrayList<Any>) : FlagChatAdapter(context) {
 
-    /**
-     * Name of the person user is chatting with
-     */
+    /** Name of the person user is chatting with. */
     override val otherName: String get() = "John"
 
-    /**
-     * Size of list i.e. number of messages
-     */
+    /** Size of list i.e. number of messages. */
     override val listSize: Int get() = list.size
 
-    /**
-     * Message on this index
-     */
+    /** Message on this index. */
     override fun chatMessage(position: Int): String {
         return (list[position] as ChatModel).message
     }
 
-    /**
-     * Message time on this index
-     */
+    /**  Message time on this index. */
     override fun messageTime(position: Int): String {
         return (list[position] as ChatModel).time
     }
 
-    /**
-     * Message sender on this index
-     */
+    /** Message sender on this index. */
     override fun isMe(position: Int): Boolean {
         return (list[position] as ChatModel).isMe
     }
 
-    /**
-     * Animation on this index
-     */
+    /** Animation on this index. */
     override fun animation(position: Int): Boolean {
         return (list[position] as ChatModel).animate
     }
 
-    /**
-     * Set animation status on this index
-     */
+    /** Set animation status on this index. */
     override fun setAnimationStatus(position: Int, animationStatus: Boolean) {
         (list[position] as ChatModel).animate = animationStatus
     }
 
-    /**
-     * Object type on this index
-     */
+    /** Object type on this index. */
     override fun isChatModel(position: Int): Boolean {
         return list[position] is ChatModel
     }
 
-    /**
-     * Date string on this index
-     */
+    /** Date string on this index. */
     override fun date(position: Int): String {
         val item = list[position] as Calendar
         return when {
@@ -76,30 +61,24 @@ class ChatAdapter(context: Context, private var list: ArrayList<Any>) : FlagChat
         }
     }
 
-    /**
-     * Bubble color of other person
-     */
+    /** Bubble color of other person. */
     override fun colorOther(context: Context): Int {
         return ContextCompat.getColor(context, R.color.red)
     }
 
-    /**
-     * Bubble color of user
-     */
+    /** Bubble color of user. */
     override fun colorMe(context: Context): Int {
         return ContextCompat.getColor(context, R.color.cyan)
     }
 
-    /**
-     * Handle long click event
-     */
+    /** Handle long click event. */
     override fun onMessageLongClicked(position: Int) {
         Toast.makeText(context, "Long clicked on position $position", Toast.LENGTH_LONG).show()
     }
 
     /**
      * If you want to change show time logic, you can override this method.
-     * I prefer the logic currently implemented in adapter
+     * I prefer the logic currently implemented in adapter.
      */
     override fun showTime(position: Int): Boolean {
         return super.showTime(position)
